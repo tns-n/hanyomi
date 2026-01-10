@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Hanyomi - Korean Dictionary",
+  "version": "1.0.0",
+  "description": "韓国語学習用の拡張機能。選択した文字の意味をポップアップで表示します。",
+  "permissions": ["activeTab", "scripting", "storage", "local"],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "https://ac-dict.naver.com/*",
+    "https://korean.dict.naver.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Hanyomi"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ]
+}

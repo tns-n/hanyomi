@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary Popup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: transparent;
+        }
+
+        .popup-container {
+            background: #2a2a2a;
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+            width: 360px;
+            font-size: 13px;
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid #444444;
+        }
+
+        .popup-header {
+            background: #333333;
+            padding: 12px 16px;
+            border-bottom: 1px solid #444444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .word-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            flex: 1;
+        }
+
+        .word-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .word-pronunciation {
+            font-size: 12px;
+            color: #999999;
+            margin-top: 2px;
+        }
+
+        .close-btn {
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: none;
+            color: #999999;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #ffffff;
+        }
+
+        .popup-content {
+            padding: 16px;
+        }
+
+        .meaning-entry {
+            margin-bottom: 16px;
+        }
+
+        .meaning-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .meaning-number {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            min-width: 20px;
+        }
+
+        .meaning-header-content {
+            flex: 1;
+        }
+
+        .word-form {
+            font-size: 13px;
+            color: #cccccc;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sound-icon {
+            width: 20px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .meanings-list {
+            margin-left: 32px;
+        }
+
+        .meaning-text {
+            font-size: 13px;
+            color: #e0e0e0;
+            line-height: 1.5;
+            margin-bottom: 4px;
+        }
+
+        .meaning-source {
+            font-size: 11px;
+            color: #666666;
+            margin-top: 6px;
+        }
+
+        .meaning-note {
+            font-size: 12px;
+            color: #0099ff;
+            margin-top: 6px;
+        }
+
+        .divider {
+            height: 1px;
+            background: #444444;
+            margin: 16px 0;
+        }
+
+        .view-all-btn {
+            text-align: right;
+            padding: 12px 16px;
+            border-top: 1px solid #444444;
+            background: #333333;
+        }
+
+        .view-all-btn a {
+            color: #666666;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+
+        .view-all-btn a:hover {
+            color: #999999;
+        }
+
+        .footer-note {
+            padding: 12px 16px;
+            background: #2d2d2d;
+            border-top: 1px solid #444444;
+            font-size: 11px;
+            color: #666666;
+            line-height: 1.4;
+        }
+
+        .footer-note a {
+            color: #0099ff;
+            text-decoration: none;
+        }
+
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* ポップアップスタイル */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 20px;
+            z-index: 10000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="popup-container">
+        <!-- ヘッダー -->
+        <div class="popup-header">
+            <div class="word-header">
+                <div class="word-title">다하다 1</div>
+                <div class="word-pronunciation">[다하다] 🔊</div>
+            </div>
+            <button class="close-btn">✕</button>
+        </div>
+
+        <!-- コンテンツ -->
+        <div class="popup-content">
+            <!-- 意味1 -->
+            <div class="meaning-entry">
+                <div class="meaning-header">
+                    <div class="meaning-number">1.</div>
+                    <div class="meaning-header-content">
+                        <div class="word-form">
+                            た.す【足す】、くわえる【加える】
+                        </div>
+                    </div>
+                </div>
+                <div class="meanings-list">
+                    <div class="meaning-text">2. ま.す【増す】、さらに【更に】</div>
+                </div>
+
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- 意味2 -->
+            <div class="meaning-entry">
+                <div class="meaning-header">
+                    <div class="meaning-number">2.</div>
+                    <div class="meaning-header-content">
+                        <div class="word-form">
+                            よりひと.い、よりおおきい 【より大きい】 (→ 前→)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
