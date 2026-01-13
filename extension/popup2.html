@@ -1,0 +1,246 @@
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary Examples Popup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: transparent;
+        }
+
+        .popup-container {
+            background: #2a2a2a;
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+            width: 360px;
+            font-size: 13px;
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid #444444;
+        }
+
+        .popup-header {
+            background: #333333;
+            padding: 12px 16px;
+            border-bottom: 1px solid #444444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .word-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            flex: 1;
+        }
+
+        .word-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .word-pronunciation {
+            font-size: 12px;
+            color: #999999;
+            margin-top: 2px;
+        }
+
+        .close-btn {
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: none;
+            color: #999999;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #ffffff;
+        }
+
+        .popup-content {
+            padding: 0;
+        }
+
+        .examples-section {
+            margin-bottom: 0;
+        }
+
+        .example-item {
+            margin-bottom: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 7px;
+        }
+
+        .example-item:nth-child(odd) {
+            background: #333333;
+        }
+
+        .example-item:nth-child(even) {
+            background: #252525;
+        }
+
+        .example-number {
+            font-size: 12px;
+            font-weight: bold;
+            color: #999999;
+            margin-bottom: 2px;
+        }
+
+        .example-korean {
+            font-size: 13px;
+            color: #e0e0e0;
+            line-height: 1.4;
+            padding: 4px 0;
+            word-break: break-word;
+        }
+
+        .example-japanese {
+            font-size: 13px;
+            color: #b0b0b0;
+            line-height: 1.4;
+            padding: 4px 0;
+            word-break: break-word;
+        }
+
+        .example-divider {
+            display: none;
+        }
+
+        .footer-note {
+            text-align: right;
+            padding: 12px 16px;
+            font-size: 12px;
+            color: #666666;
+            border-top: 1px solid #444444;
+            margin-top: 0;
+            background: #2a2a2a;
+        }
+
+        .footer-note a {
+            color: #0099ff;
+            text-decoration: none;
+        }
+
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <style id="mttstyleSubtitle">
+        #ytp-caption-window-container .ytp-caption-segment {
+            cursor: text !important;
+            user-select: text !important;
+            font-family:
+                -apple-system, BlinkMacSystemFont,
+                "Segoe UI", "Roboto", "Oxygen",
+                "Ubuntu", "Cantarell", "Fira Sans",
+                "Droid Sans", "Helvetica Neue", sans-serif !important;
+        }
+
+        .caption-visual-line {
+            display: flex !important;
+            align-items: stretch !important;
+            direction: ltr
+        }
+
+        .captions-text .caption-visual-line:first-of-type:after {
+            content: '⣿⣿';
+            border-radius: 3px !important;
+            color: white !important;
+            background: transparent !important;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+            display: inline-block;
+            vertical-align: top;
+            opacity: 0;
+            transition: opacity 0.7s ease-in-out;
+        }
+
+        .ytp-caption-segment {
+            color: white !important;
+            text-shadow: 1px 1px 2px black !important;
+            backdrop-filter: blur(3px) !important;
+            background: rgba(8, 8, 8, 0.1) !important;
+        }
+
+        .captions-text:hover .caption-visual-line:first-of-type:after {
+            opacity: 1;
+        }
+
+        .ytp-pause-overlay {
+            display: none !important;
+        }
+
+        .ytp-expand-pause-overlay .caption-window {
+            display: block !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="popup-container">
+        <!-- ヘッダー -->
+
+
+        <!-- コンテンツ -->
+        <div class="popup-content">
+            <div class="examples-section">
+                <!-- 例文1 -->
+                <div class="example-item">
+
+                    <div class="example-korean">우리는 선생님께 감사하고 있습니다.</div>
+                    <div class="example-japanese">私たちは先生に感謝しています。</div>
+                </div>
+
+                <!-- 例文2 -->
+                <div class="example-item">
+
+                    <div class="example-korean">좋은 기회를 주셔서 감사합니다.</div>
+                    <div class="example-japanese">良い機会をいただきありがとうございます。</div>
+                </div>
+
+
+                <!-- 例文3 -->
+                <div class="example-item">
+
+                    <div class="example-korean">도움을 주신 모든 분들께 감사드립니다.</div>
+                    <div class="example-japanese">ご協力いただいた皆様に感謝申し上げます。</div>
+                </div>
+
+                <!-- 例文4 -->
+                <div class="example-item">
+
+                    <div class="example-korean">여행을 함께 해준 친구들에게 감사한다.</div>
+                    <div class="example-japanese">旅行を一緒にしてくれた友人たちに感謝する。</div>
+                </div>
+            </div>
+
+            <!-- フッター -->
+
+        </div>
+    </div>
+
+
+</body>

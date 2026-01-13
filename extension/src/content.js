@@ -6,11 +6,13 @@ import Popup from "./components/Popup";
 
 let popupContainer = null;
 let popupRoot = null;
+let isPopupFocused = false;
 
 // ポップアップを表示
 function showPopup(word, selectionRect) {
-  // 既存のポップアップを削除
+  // 既存のポップアップを削除（フォーカス状態をリセット）
   hidePopup();
+  isPopupFocused = false;
 
   // コンテナを作成
   popupContainer = document.createElement("div");
@@ -25,6 +27,15 @@ function showPopup(word, selectionRect) {
 
   popupContainer.style.left = x + "px";
   popupContainer.style.top = y + "px";
+
+  // ポップアップにフォーカスイベントを追加
+  popupContainer.addEventListener("mouseenter", () => {
+    isPopupFocused = true;
+  });
+
+  popupContainer.addEventListener("mouseleave", () => {
+    isPopupFocused = false;
+  });
 
   document.body.appendChild(popupContainer);
 
@@ -47,6 +58,7 @@ function hidePopup() {
     popupContainer.parentNode.removeChild(popupContainer);
     popupContainer = null;
   }
+  isPopupFocused = false;
 }
 
 // 文字選択イベント
@@ -55,12 +67,16 @@ document.addEventListener("mouseup", () => {
   const selectedText = selection.toString().trim();
 
   if (selectedText.length > 0 && selectedText.length < 50) {
+    // 新しい文字が選択された場合はポップアップを削除
+    hidePopup();
+
     const range = selection.getRangeAt(0);
     const rect = range.getBoundingClientRect();
 
     // ポップアップを表示
     showPopup(selectedText, rect);
-  } else {
+  } else if (!isPopupFocused) {
+    // ポップアップにフォーカスがない場合のみ削除
     hidePopup();
   }
 });
@@ -69,6 +85,7 @@ document.addEventListener("mouseup", () => {
 document.addEventListener("mousedown", (e) => {
   // ポップアップ内をクリック以外で削除
   if (popupContainer && !popupContainer.contains(e.target)) {
+    // ポップアップ外をクリックした場合のみ削除
     hidePopup();
   }
 });
