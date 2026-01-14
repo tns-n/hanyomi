@@ -37,6 +37,14 @@ const ExamplesPanel = ({ word }) => {
     }
   };
 
+  // 太字を下線に変換する関数
+  const convertBoldToUnderline = (html) => {
+    // <b>...</b> または <strong>...</strong> を <u>...</u> に変換
+    let converted = html.replace(/<b>(.*?)<\/b>/g, "<u>$1</u>");
+    converted = converted.replace(/<strong>(.*?)<\/strong>/g, "<u>$1</u>");
+    return converted;
+  };
+
   const addToAnki = async (example, index) => {
     setAddingIndex(index);
     setAddMessage("");
@@ -55,8 +63,8 @@ const ExamplesPanel = ({ word }) => {
               deckName: "韓国語::語彙",
               modelName: "miz_1",
               fields: {
-                表面: example.expExample2,
-                裏面: example.expExample1,
+                表面: convertBoldToUnderline(example.expExample2),
+                裏面: convertBoldToUnderline(example.expExample1),
               },
             },
             (response) => {
